@@ -7,6 +7,9 @@ namespace DellChallenge.A
         static void Main(string[] args)
         {
             // State and explain console output order.
+            /*1. When class B is called, the constructor for class A is called, because of the inheritance (B:A) => A.A()
+             2. The constructor for class B is called => B.B()
+             3. Then, we are setting a value for the "Age" property, so, the "set" property is called, and it contains a Console.Writeline => A.Age*/
             new B();
             Console.ReadKey();
         }

@@ -18,6 +18,11 @@ namespace DellChallenge.D1.Api.Dal
             return _context.Products.Select(p => MapToDto(p));
         }
 
+        public ProductDto Get(string id)
+        {
+            return _context.Products.Where(p => p.Id == id).Select(p => MapToDto(p)).SingleOrDefault();
+        }
+
         public ProductDto Add(NewProductDto newProduct)
         {
             var product = MapToData(newProduct);
@@ -29,7 +34,11 @@ namespace DellChallenge.D1.Api.Dal
 
         public ProductDto Delete(string id)
         {
-            throw new System.NotImplementedException();
+            var product = _context.Products.Where(p => p.Id == id).FirstOrDefault();
+            _context.Entry(product).State = Microsoft.EntityFrameworkCore.EntityState.Deleted;
+            _context.SaveChanges();
+            var deleted = MapToDto(product);
+            return deleted;
         }
 
         private Product MapToData(NewProductDto newProduct)
